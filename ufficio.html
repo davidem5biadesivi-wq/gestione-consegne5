@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Ufficio - Riepilogo Consegne</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background-color: #f4f4f4; }
+        table { width: 100%; border-collapse: collapse; background: #fff; }
+        th, td { padding: 10px; border: 1px solid #ccc; }
+        th { background-color: #eee; }
+    </style>
+</head>
+<body>
+    <h2>Riepilogo Consegne</h2>
+    <table id="tabella">
+        <thead>
+            <tr>
+                <th>N. ordine</th>
+                <th>Cliente</th>
+                <th>Macchina</th>
+                <th>Data prevista</th>
+                <th>Operatore</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('notifica') === 'true') {
+            alert("Consegnare data");
+        }
+        const dati = (localStorage.getItem("consegne") || "").trim().split("\n");
+        const tbody = document.querySelector("#tabella tbody");
+        dati.forEach(riga => {
+            const campi = riga.split(",");
+            if (campi.length === 5) {
+                const tr = document.createElement("tr");
+                campi.forEach(c => {
+                    const td = document.createElement("td");
+                    td.textContent = c;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            }
+        });
+    </script>
+</body>
+</html>

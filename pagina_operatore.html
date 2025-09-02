@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Inserimento Consegne</title>
+    <style>
+        body { font-family: Arial; padding: 40px; background-color: #f4f4f4; }
+        form { background: #fff; padding: 20px; border-radius: 8px; max-width: 500px; margin-bottom: 20px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px; width: 100%; }
+    </style>
+</head>
+<body>
+    <h2>Inserisci dati di consegna</h2>
+    <form id="formConsegna">
+        <input type="text" id="ordine" placeholder="N. ordine" required>
+        <input type="text" id="cliente" placeholder="Cliente" required>
+        <input type="text" id="macchina" placeholder="Macchina" required>
+        <input type="date" id="data" required>
+        <button type="submit">Invia</button>
+    </form>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const utente = urlParams.get('utente');
+        document.getElementById("formConsegna").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const ordine = document.getElementById("ordine").value;
+            const cliente = document.getElementById("cliente").value;
+            const macchina = document.getElementById("macchina").value;
+            const data = document.getElementById("data").value;
+            const riga = `${ordine},${cliente},${macchina},${data},${utente}\n`;
+            let esistenti = localStorage.getItem("consegne") || "";
+            esistenti += riga;
+            localStorage.setItem("consegne", esistenti);
+            alert("Dati inviati!");
+            document.getElementById("formConsegna").reset();
+        });
+    </script>
+</body>
+</html>
